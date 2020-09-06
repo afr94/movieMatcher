@@ -1,0 +1,7 @@
+Chargement du fichier en 1 fois: gain de 2sec sur 50K lignes
+la comparaison avec ignore case est importante, pour les noms d'acteur au moins
+
+Utiliser un hashSet pour accélérer les comparaisons.
+
+
+
