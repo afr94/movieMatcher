@@ -25,18 +25,23 @@ public class MovieMatcher {
 
     }
 
-    public Map<String, List<String>> findMatches(List<Movie> allMovies) {
+    public Map<String, List<String>> findMatches(List<Movie> _allMovies) {
         Instant start = Instant.now();
+        List<Movie> allMovies = new ArrayList<>(_allMovies);
         Map<String, List<String>> mapResult = new HashMap<>();
 
         List<Movie> movies = new ArrayList<>(allMovies);
         for (Movie movie : allMovies) {
+            if (movie.alreadyAssociated == true){
+                continue;
+            }
             movies.remove(0);
             List<String> listMatches = new ArrayList<>(); //70ms
             showDuration(start);
             movies.parallelStream().forEach(m -> {//
                 if (checkYear(movie.year, m.year) &&
                     checkLength(movie.length, m.length)) {
+                    m.alreadyAssociated= true;
                     addMatch(listMatches, m.id); //
                 }
             });//
@@ -45,7 +50,7 @@ public class MovieMatcher {
             }
         }
 
-        System.out.println("Time elapsed for matching " + allMovies.size() + " movies : " + Duration.between(start, Instant.now()).toSeconds() + " s");
+        System.out.println("Time elapsed for matching " + allMovies.size() + " movies : " + Duration.between(start, Instant.now()).toMillis() + " ms (" + Duration.between(start, Instant.now()).toSeconds() + " s)");
         System.out.println("Number of matching movies: "+mapResult.size());
         return mapResult;
     }

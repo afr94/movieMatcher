@@ -2,8 +2,12 @@ package service;
 
 import domain.*;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.FileAttribute;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
@@ -70,7 +74,12 @@ public class MovieFileManager {
         return actors;
     }
 
-    public void WriteMatchingResult(Map<String, List<String>> mapResult) {
-
+    public void WriteMatchingResult(Map<String, List<String>> mapResult) throws IOException {
+        Path path = Paths.get("result.txt");
+        Files.write(path, "".getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+        for( Map.Entry<String, List<String>> mapEntry: mapResult.entrySet()) {
+            String line = mapEntry.getKey().toString() + "\t" +  String.join("\t",mapEntry.getValue())+ "\n";
+            Files.write(path, line.getBytes(), StandardOpenOption.APPEND);
+        }
     }
 }

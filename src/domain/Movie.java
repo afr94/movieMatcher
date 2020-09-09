@@ -13,8 +13,9 @@ public class Movie {
     public Set<String> directors;
     public Set<String> actors;
 
-    public Movie() {
+    public boolean alreadyAssociated = false;
 
+    public Movie() {
     }
 
     public Movie(String id, int year, int length, Set<String> genres, Set<String> directors, Set<String> actors) {
