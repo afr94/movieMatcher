@@ -34,15 +34,15 @@ public class MovieMatcher {
             movies.remove(0);
             List<String> listMatches = new ArrayList<>(); //70ms
             showDuration(start);
-            movies.parallelStream().forEach(m -> {/* 1654ms reste 2169
+            movies.parallelStream().forEach(m -> {//
                 if (checkYear(movie.year, m.year) &&
-                        checkLength(movie.length, m.length)) {
-                    //addMatch(listMatches, m.id); 2500ms reste 3823
-                }*/
-            });/* 200ms 6324
+                    checkLength(movie.length, m.length)) {
+                    addMatch(listMatches, m.id); //
+                }
+            });//
             if (listMatches.size() > 0) {
                 mapResult.put(movie.id, listMatches);
-            }*/
+            }
         }
 
         System.out.println("Time elapsed for matching " + allMovies.size() + " movies : " + Duration.between(start, Instant.now()).toSeconds() + " s");
